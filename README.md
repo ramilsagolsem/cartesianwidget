@@ -1,5 +1,5 @@
-# CartesianWwidget API
+# Cartesian Widget API
 
-#### Swagger UI url : http://localhost:<port>/swagger-ui
-#### API Doc url : http://localhost:<port>/v2/api-docs
+#### Swagger UI url : http://localhost:9011/swagger-ui (Default port is 9011 but it can be changed during boot)
+#### API Doc url : http://localhost:9011/v2/api-docs (Default port is 9011 but it can be changed during boot)
   

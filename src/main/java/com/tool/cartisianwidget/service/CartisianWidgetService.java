@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface CartisianWidgetService {
 
-    public CartisianWidget findById(Integer id);
-    public List<CartisianWidget> findAll();
-    public List<CartisianWidget> findAll(Integer row);
-    public CartisianWidget create(CartisianWidget widget);
-    public CartisianWidget update(CartisianWidget widget);
-    public void delete(Integer id);
+    CartisianWidget findById(Integer id);
+    List<CartisianWidget> findAll();
+    List<CartisianWidget> findAll(Integer row);
+    CartisianWidget create(CartisianWidget widget);
+    CartisianWidget update(CartisianWidget widget);
+    void delete(Integer id);
 }

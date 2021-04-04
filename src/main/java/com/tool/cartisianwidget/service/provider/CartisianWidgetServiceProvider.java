@@ -32,6 +32,11 @@ public class CartisianWidgetServiceProvider implements CartisianWidgetService {
     }
 
     @Override
+    public List<CartisianWidget> findAll(Integer row) {
+        return repository.findAll(row);
+    }
+
+    @Override
     public CartisianWidget create(CartisianWidget widget) {
         if(widget.getWidth()<0 || widget.getHeight()<0){
             throw new ValidationExpection("Width and height cannot be negative");

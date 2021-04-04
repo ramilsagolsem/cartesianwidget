@@ -8,6 +8,7 @@ public interface CartisianWidgetRepository {
 
     CartisianWidget findById(Integer id);
     List<CartisianWidget> findAll();
+    List<CartisianWidget> findAll(Integer row);
     CartisianWidget save(CartisianWidget widget);
     CartisianWidget update(CartisianWidget widget);
     void delete(Integer id);

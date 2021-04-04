@@ -8,6 +8,7 @@ public interface CartisianWidgetService {
 
     public CartisianWidget findById(Integer id);
     public List<CartisianWidget> findAll();
+    public List<CartisianWidget> findAll(Integer row);
     public CartisianWidget create(CartisianWidget widget);
     public CartisianWidget update(CartisianWidget widget);
     public void delete(Integer id);

@@ -72,6 +72,13 @@ public class TestCartisianWidgetService {
     }
 
     @Test
+    public void findAllWithPagination(){
+        mockData4();
+        List<CartisianWidget> widgets = cartisianWidgetService.findAll(10);
+        System.out.println(widgets);
+    }
+
+    @Test
     public void delete(){
         mockData();
         cartisianWidgetService.delete(2);
@@ -117,6 +124,12 @@ public class TestCartisianWidgetService {
         cartisianWidgetService.create(instantiate(1,2,3,1,6,8));
         cartisianWidgetService.create(instantiate(2,4,7,2,6,8));
         cartisianWidgetService.create(instantiate(3,6,9,4,6,8));
+    }
+
+    private void mockData4(){
+        for(int i=1; i<=20; i++){
+            cartisianWidgetService.create(instantiate(i,2+i,4+1,i,6,8));
+        }
     }
 
     private CartisianWidget instantiate(Integer id, Integer x, Integer y, Integer z, Integer w, Integer h){

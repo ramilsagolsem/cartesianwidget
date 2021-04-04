@@ -30,6 +30,16 @@ public class CartisianWidgetRepositoyProvider implements CartisianWidgetReposito
     }
 
     @Override
+    public List<CartisianWidget> findAll(Integer row) {
+        return widgetConcurrentHashMap
+                .values()
+                .stream()
+                .sorted()
+                .limit(row)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public CartisianWidget save(CartisianWidget widget) {
         if(widget.getzCoordinate()==null){
             widget.setzCoordinate(maxZCoordinate()+1);

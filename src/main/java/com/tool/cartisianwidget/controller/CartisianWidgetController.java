@@ -1,6 +1,7 @@
 package com.tool.cartisianwidget.controller;
 
 import com.tool.cartisianwidget.error.ObjectNotFoundException;
+import com.tool.cartisianwidget.error.ValidationExpection;
 import com.tool.cartisianwidget.model.CartisianWidget;
 import com.tool.cartisianwidget.service.CartisianWidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,11 @@ public class CartisianWidgetController {
     }
 
     @GetMapping("/cartisian/widgets")
-    public ResponseEntity<List<CartisianWidget>> all() {
-        return ResponseEntity.ok().body(cartisianWidgetService.findAll());
+    public ResponseEntity<List<CartisianWidget>> all(@RequestParam(required = false) Integer row) {
+        if(row!=null && (row > 500 || row <0)){
+            throw new ValidationExpection("Maximum number of widgets which can be fetched is 500. It cannot be negative");
+        }
+        return ResponseEntity.ok().body(row!=null?cartisianWidgetService.findAll(row):cartisianWidgetService.findAll(10));
     }
 
     @DeleteMapping("/cartisian/widget/{id}")

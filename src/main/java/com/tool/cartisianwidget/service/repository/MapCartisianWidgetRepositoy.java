@@ -4,6 +4,7 @@ import com.tool.cartisianwidget.model.CartisianWidget;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -11,16 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
-public class CartisianWidgetRepositoyProvider implements CartisianWidgetRepository{
+public class MapCartisianWidgetRepositoy{
 
     private ConcurrentHashMap<Integer,CartisianWidget> widgetConcurrentHashMap = new ConcurrentHashMap<>();
 
-    @Override
     public CartisianWidget findById(Integer id) {
         return widgetConcurrentHashMap.get(id);
     }
 
-    @Override
     public List<CartisianWidget> findAll() {
         return widgetConcurrentHashMap
                 .values()
@@ -29,7 +28,6 @@ public class CartisianWidgetRepositoyProvider implements CartisianWidgetReposito
                 .collect(Collectors.toList());
     }
 
-    @Override
     public List<CartisianWidget> findAll(Integer row) {
         return widgetConcurrentHashMap
                 .values()
@@ -39,31 +37,28 @@ public class CartisianWidgetRepositoyProvider implements CartisianWidgetReposito
                 .collect(Collectors.toList());
     }
 
-    @Override
     public CartisianWidget save(CartisianWidget widget) {
-        if(widget.getzCoordinate()==null){
-            widget.setzCoordinate(maxZCoordinate()+1);
+        if(widget.getZcoordinate()==null){
+            widget.setZcoordinate(maxZCoordinate()+1);
         }else {
-            incrementZCoordinate(widget.getzCoordinate(),null);
+            incrementZCoordinate(widget.getZcoordinate(),null);
         }
-        widget.setLastmodified(LocalDateTime.now());
+        widget.setLastmodified(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")));
         widgetConcurrentHashMap.putIfAbsent(widget.getId(),widget);
         return widget;
     }
 
-    @Override
     public CartisianWidget update(CartisianWidget widget) {
-        if(widget.getzCoordinate()==null){
-            widget.setzCoordinate(maxZCoordinate()+1);
+        if(widget.getZcoordinate()==null){
+            widget.setZcoordinate(maxZCoordinate()+1);
         }else {
-            incrementZCoordinate(widget.getzCoordinate(),widget.getId());
+            incrementZCoordinate(widget.getZcoordinate(),widget.getId());
         }
-        widget.setLastmodified(LocalDateTime.now());
+        widget.setLastmodified(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")));
         widgetConcurrentHashMap.replace(widget.getId(),widget);
         return widget;
     }
 
-    @Override
     public void delete(Integer id) {
         widgetConcurrentHashMap.remove(id);
     }
@@ -74,7 +69,7 @@ public class CartisianWidgetRepositoyProvider implements CartisianWidgetReposito
                 .values()
                 .stream()
                 .sorted()
-                .map(m->m.getzCoordinate())
+                .map(m->m.getZcoordinate())
                 .collect(Collectors.toList());
         return zCoordinates.get(zCoordinates.size()-1);
     }
@@ -84,7 +79,7 @@ public class CartisianWidgetRepositoyProvider implements CartisianWidgetReposito
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
-                .filter(f->f.getKey()!=filter)
+                .filter(f->!f.getKey().equals(filter))
                 .collect(Collectors.toList())
                 :
                 widgetConcurrentHashMap
@@ -93,16 +88,16 @@ public class CartisianWidgetRepositoyProvider implements CartisianWidgetReposito
                         .sorted(Map.Entry.comparingByValue())
                         .collect(Collectors.toList());
         //System.out.println("sortedWidget "+sortedWidget);
-        int index = Collections.binarySearch(sortedWidget.stream().map(m->m.getValue().getzCoordinate()).collect(Collectors.toList()),zCoordinate);
+        int index = Collections.binarySearch(sortedWidget.stream().map(m->m.getValue().getZcoordinate()).collect(Collectors.toList()),zCoordinate);
         //System.out.println("Index "+index);
         if(index>=0) {
             for (int i = index; i < sortedWidget.size(); i++) {
                 //System.out.println("i "+i);
-                Integer value = sortedWidget.get(i).getValue().getzCoordinate()+1;
+                Integer value = sortedWidget.get(i).getValue().getZcoordinate()+1;
                 //System.out.println("value "+value);
-                widgetConcurrentHashMap.get(sortedWidget.get(i).getKey()).setzCoordinate(value);
-                if(i< sortedWidget.size()-1 && value!=sortedWidget.get(i+1).getValue().getzCoordinate()){
-                    //System.out.println("break "+sortedWidget.get(i+1).getValue().getzCoordinate());
+                widgetConcurrentHashMap.get(sortedWidget.get(i).getKey()).setZcoordinate(value);
+                if(i< sortedWidget.size()-1 && !value.equals(sortedWidget.get(i+1).getValue().getZcoordinate())){
+                    //System.out.println("break "+sortedWidget.get(i+1).getValue().getZcoordinate());
                     break;
                 }
             }

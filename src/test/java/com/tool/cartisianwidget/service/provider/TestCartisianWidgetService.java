@@ -18,11 +18,13 @@ public class TestCartisianWidgetService {
     @Autowired
     private CartisianWidgetService cartisianWidgetService;
 
+
     @Test
     public void create(){
-        CartisianWidget widget1 = instantiate(null,2,4,1,6,8);
+        CartisianWidget widget1 = instantiate(null,2,4,6,6,8);
         widget1 = cartisianWidgetService.create(widget1);
         System.out.println(widget1);
+        System.out.println(cartisianWidgetService.findAll());
     }
 
     @Test
@@ -93,6 +95,7 @@ public class TestCartisianWidgetService {
         CartisianWidget widget1 = instantiate(2,30,10,2,7,8);
         widget1 = cartisianWidgetService.update(widget1);
         System.out.println(cartisianWidgetService.findById(2));
+        System.out.println(cartisianWidgetService.findAll());
         Assert.assertEquals(widget1,cartisianWidgetService.findById(2));
     }
 
@@ -134,9 +137,9 @@ public class TestCartisianWidgetService {
 
     private CartisianWidget instantiate(Integer id, Integer x, Integer y, Integer z, Integer w, Integer h){
         CartisianWidget widget = new CartisianWidget();
-        widget.setxCoordinate(x);
-        widget.setyCoordinate(y);
-        widget.setzCoordinate(z);
+        widget.setXcoordinate(x);
+        widget.setYcoordinate(y);
+        widget.setZcoordinate(z);
         widget.setId(id);
         widget.setWidth(w);
         widget.setHeight(h);

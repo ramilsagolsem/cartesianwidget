@@ -4,19 +4,21 @@ import com.tool.cartisianwidget.error.ObjectNotFoundException;
 import com.tool.cartisianwidget.error.ValidationExpection;
 import com.tool.cartisianwidget.model.CartisianWidget;
 import com.tool.cartisianwidget.service.CartisianWidgetService;
-import com.tool.cartisianwidget.service.repository.CartisianWidgetRepository;
+import com.tool.cartisianwidget.service.repository.MapCartisianWidgetRepositoy;
 import com.tool.cartisianwidget.service.sequence.SequenceGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CartisianWidgetServiceProvider implements CartisianWidgetService {
+@ConditionalOnProperty(value="sql.repository", havingValue = "false")
+public class DefaultCartisianWidgetService implements CartisianWidgetService {
 
     @Autowired
-    private CartisianWidgetRepository repository;
+    private MapCartisianWidgetRepositoy repository;
 
     @Autowired
     private SequenceGenerator sequenceGenerator;

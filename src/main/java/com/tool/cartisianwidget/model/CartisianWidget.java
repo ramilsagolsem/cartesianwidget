@@ -1,21 +1,29 @@
 package com.tool.cartisianwidget.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.time.LocalDateTime;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "CARTISIANWIDGET")
 public class CartisianWidget implements Comparable<CartisianWidget>{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
-    private Integer zCoordinate;
+    @Column(name="xcoordinate")
+    private Integer xcoordinate;
+    @Column(name="ycoordinate")
+    private Integer ycoordinate;
+    @Column(name="zcoordinate")
+    private Integer zcoordinate;
+    @Column(name="width")
     private Integer width;
+    @Column(name="height")
     private Integer height;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    private LocalDateTime lastmodified;
+    @Column(name="lastmodified")
+    private String lastmodified;
 
     public Integer getId() {
         return id;
@@ -25,28 +33,28 @@ public class CartisianWidget implements Comparable<CartisianWidget>{
         this.id = id;
     }
 
-    public Integer getxCoordinate() {
-        return xCoordinate;
+    public Integer getXcoordinate() {
+        return xcoordinate;
     }
 
-    public void setxCoordinate(Integer xCoordinate) {
-        this.xCoordinate = xCoordinate;
+    public void setXcoordinate(Integer xcoordinate) {
+        this.xcoordinate = xcoordinate;
     }
 
-    public Integer getyCoordinate() {
-        return yCoordinate;
+    public Integer getYcoordinate() {
+        return ycoordinate;
     }
 
-    public void setyCoordinate(Integer yCoordinate) {
-        this.yCoordinate = yCoordinate;
+    public void setYcoordinate(Integer ycoordinate) {
+        this.ycoordinate = ycoordinate;
     }
 
-    public Integer getzCoordinate() {
-        return zCoordinate;
+    public Integer getZcoordinate() {
+        return zcoordinate;
     }
 
-    public void setzCoordinate(Integer zCoordinate) {
-        this.zCoordinate = zCoordinate;
+    public void setZcoordinate(Integer zcoordinate) {
+        this.zcoordinate = zcoordinate;
     }
 
     public Integer getWidth() {
@@ -65,17 +73,17 @@ public class CartisianWidget implements Comparable<CartisianWidget>{
         this.height = height;
     }
 
-    public LocalDateTime getLastmodified() {
+    public String getLastmodified() {
         return lastmodified;
     }
 
-    public void setLastmodified(LocalDateTime lastmodified) {
+    public void setLastmodified(String lastmodified) {
         this.lastmodified = lastmodified;
     }
 
     @Override
     public int compareTo(CartisianWidget o) {
-        return this.zCoordinate - o.zCoordinate;
+        return this.zcoordinate - o.zcoordinate;
     }
 
 
@@ -89,12 +97,12 @@ public class CartisianWidget implements Comparable<CartisianWidget>{
     public boolean equals(Object obj) {
         if(obj instanceof CartisianWidget){
             CartisianWidget ob = (CartisianWidget)obj;
-            if(this.getId() == ob.getId()
-            && this.getzCoordinate() == ob.getzCoordinate()
-            && this.getxCoordinate() == ob.getxCoordinate()
-            && this.getyCoordinate() == ob.getyCoordinate()
-            && this.getHeight() == ob.getHeight()
-            && this.getWidth() == ob.getWidth()){
+            if(this.getId().equals(ob.getId())
+            && this.getZcoordinate().equals(ob.getZcoordinate())
+            && this.getXcoordinate().equals(ob.getXcoordinate())
+            && this.getYcoordinate().equals(ob.getYcoordinate())
+            && this.getHeight().equals(ob.getHeight())
+            && this.getWidth().equals(ob.getWidth())){
                 return true;
             }
         }
